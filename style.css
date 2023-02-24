@@ -12,11 +12,20 @@ body {
 }
 
 h1 {
+    font-size: 2rem;
     color: white;
     font-weight: 700;
 }
 
+h2 {
+    color: white;
+    width: 600px;
+    font-size: 1.3rem;
+}
+
 /* -------home page ------- */
+
+
 
 .home-page-buttons {
     display: flex;
@@ -25,7 +34,7 @@ h1 {
 }
 
 .btn,
-.btn-end {
+.end-btn {
     display: flex;
     flex-direction: column;
     border: 0;
@@ -70,26 +79,17 @@ h1 {
     transition: margin 0.5s ease-out;
 }
 
+/* message show up when user click end game button on home page  */
 .message {
-    line-height: 1.7;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    padding: 20px;
-    z-index: 30;
-    text-align: center;
-    opacity: 0;
+    display: none;
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: (-50%, -150%);
-    transition: transform 0.4s ease-in;
-
+    bottom: 10rem;
+    left: 30%;
+    color: white;
+    font-size: 1.5rem;
 }
 
-.massage.visible {
-    transform: translate(-50%, 150%);
-    opacity: 1;
-}
+
 
 
 /* --------game screen------ */
@@ -98,14 +98,19 @@ h1 {
 .score {
     position: absolute;
     top: 20px;
+    background-color: #020632;
+    color: white;
+    padding: 2rem;
+    border-radius: 10%;
 }
 
+
 .time {
-    left: 50px;
+    left: 40%;
 }
 
 .score {
-    right: 50px;
+    right: 40%;
 }
 
 .game-screen {
