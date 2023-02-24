@@ -31,8 +31,9 @@ for (let i = 0; i < buzzList.length; i++) {
     this.style.display = "none";
     score += 10;
     scores.innerHTML = score;
+
     setTimeout(function () {
-      _that.style.display = "none";
+      this.style.display = "none";
     }, 260);
   };
 }
