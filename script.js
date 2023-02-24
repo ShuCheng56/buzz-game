@@ -24,19 +24,18 @@ start_btn.addEventListener("click", function () {
     gameScreen.scrollIntoView({ behavior: "smooth" });
     currentPage = 2;
   }
-
-  for (let i = 0; i < buzzList.length; i++) {
-    buzzList[i].onclick = function () {
-      this.style.display = "none";
-      score += 10;
-      scores.innerHTML = score;
-      setTimeout(function () {
-        _that.style.display = "none";
-      }, 260);
-    };
-  }
 });
 
+for (let i = 0; i < buzzList.length; i++) {
+  buzzList[i].onclick = function () {
+    this.style.display = "none";
+    score += 10;
+    scores.innerHTML = score;
+    setTimeout(function () {
+      _that.style.display = "none";
+    }, 260);
+  };
+}
 setInterval(function () {
   const i = Math.floor(Math.random() * 9);
   buzzList[i].style.display = "block";
