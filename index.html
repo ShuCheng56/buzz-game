@@ -14,25 +14,39 @@
 
 <body>
     <section class="home-screen" id="home-screen">
-        <h1>Find Captain Buzz Lightyear</h1>
-        <h2 id="game-rule" class="game-rule">Buzz Lightyear and Woody randomly appear on the screen. Clicking Buzz adds
-            10 points to the score, while
-            clicking Woody deducts 10 points and a red cross image will also appear.</h2>
-        <div class="home-page-buttons">
+        <!-- Sound on/off buttons -->
+        <div id="sound-buttons" class="home-page-buttons">
+            <button id="sound-on-btn" class="sound-on">Sound On</button>
+            <button id="sound-off-btn" class="sound-off">Sound Off</button>
+        </div>
+
+        <!-- Game title and video -->
+        <h1 id="gameTitle">Find Captain Buzz Lightyear</h1>
+        <video id="buzzVideo" class="buzzvideo" autoplay muted>
+            <source src="video/buzzreset.mp4 21-03-24-286.mp4">
+        </video>
+
+        <!-- Game rules and buttons -->
+        <h2 id="game-rule" class="game-rule">Get ready for some Toy Story fun! Keep your eyes peeled for Buzz Lightyear
+            and Woody as they randomly pop up on the screen. Give Buzz a high-five by clicking him to score 10 points,
+            but watch out for Woody - clicking him will deduct 10 points! And if you want to relive the excitement, just
+            refresh your browser to watch the video again. Happy clicking!
+        </h2>
+        <div id="game-buttons" class="home-page-buttons" style="display:none">
             <button class="btn" id="start-btn">
                 <span>Amigo?</span> Start Game
             </button>
             <button class="end-btn" id="end-btn">
-                <span>Enemigo?</span>
-                Game Over
+                <span>Enemigo?</span> Game Over
             </button>
             <h5 id="message" class="message">It appears that the game has reached its conclusion. Your fate is sealed.
             </h5>
         </div>
     </section>
+    </section>
 
     <section class="game-screen" id="game-screen">
-
+        <div class="video"></div>
         <h3 id="time" class="time">Time:00</h3>
         <h3 id="score" class="score">Score: 0</h3>
 
@@ -96,8 +110,12 @@
 
     </section>
 
-    <button class="end-game-button" id="end-game-button">
-        End Game
+    <button class="replay-game-button" id="replay-game-button">
+        Replay Game
+    </button>
+
+    <button class="back-to-homepage" id="back-to-homepage">
+        Home Page
     </button>
 
 

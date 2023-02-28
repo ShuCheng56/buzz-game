@@ -1,26 +1,64 @@
+//sound buttons
+const soundOnBtn = document.getElementById("sound-on-btn");
+const soundOffBtn = document.getElementById("sound-off-btn");
+const soundButtons = document.getElementById("sound-buttons");
+
+//home page
+const gameTitle = document.getElementById("gameTitle");
+const gameButtons = document.getElementById("game-buttons");
+const buzzVideo = document.getElementById("buzzVideo");
 const homeScreen = document.getElementById("home-screen");
 const gameRule = document.getElementById("game-rule");
 const startBtn = document.getElementById("start-btn");
 const endBtn = document.getElementById("end-btn");
+
+//game page
 const gameScreen = document.getElementById("game-screen");
 const time = document.getElementById("time");
 const scores = document.getElementById("score");
 const message = document.getElementById("message");
-const endGame = document.getElementById("end-game-button");
+const replayGame = document.getElementById("replay-game-button");
+const backHome = document.getElementById("back-to-homepage");
 
 const buzzList = document.querySelectorAll(".buzz");
 const woodyList = document.querySelectorAll(".woody");
 const wrong = document.querySelectorAll(".wrong");
 
-// ------End Game at Game Page-----
-endGame.addEventListener("click", function () {
-  message.style.display = "none";
-  if (currentPage === 2) {
-    homeScreen.scrollIntoView({ behavior: "smooth" });
-    currentPage = 1;
-    resetGame();
-  }
+// Set autoplay to false
+buzzVideo.autoplay = false;
+
+// Show sound buttons
+soundButtons.style.display = "flex";
+
+// Play video with sound if sound is on, otherwise mute the video
+let isSoundOn = false;
+
+// Play the video after user chooses sound on
+soundOnBtn.addEventListener("click", () => {
+  buzzVideo.muted = false;
+  isSoundOn = true;
+  soundButtons.style.display = "none";
+  startBtn.style.display = "block";
+  buzzVideo.play();
 });
+
+// Play the video after user chooses sound off
+soundOffBtn.addEventListener("click", () => {
+  buzzVideo.muted = true;
+  isSoundOn = false;
+  soundOffBtn.style.display = "none";
+  startBtn.style.display = "block";
+  buzzVideo.play();
+});
+
+// Show game buttons after video is finished
+buzzVideo.addEventListener("ended", () => {
+  gameTitle.style.display = "block";
+  gameRule.style.display = "block";
+  gameButtons.style.display = "flex";
+  soundButtons.style.display = "none";
+});
+
 // ------End Game at Home Page-----
 endBtn.addEventListener("click", function () {
   if (message.style.display === "none") {
@@ -30,22 +68,23 @@ endBtn.addEventListener("click", function () {
   }
 });
 
+//------Game Start------
+
 let currentPage = 1;
 let timeUp = false;
 let score = 0;
-let timeRemaining = 45;
+let timeRemaining = 46;
 let timerId;
 
 function resetGame() {
   score = 0;
   scores.innerHTML = score;
-  timeRemaining = 45;
+  timeRemaining = 46;
+  updateTime();
   time.innerHTML = timeRemaining;
   clearTimeout(timerId);
   timeUp = false;
-  showWoody();
 }
-
 function updateTime() {
   timeRemaining--;
   time.innerHTML = timeRemaining;
@@ -58,16 +97,18 @@ function updateTime() {
   }
 }
 
-//------Game Start------
-
 startBtn.addEventListener("click", function () {
   message.style.display = "none";
   if (currentPage === 1) {
     gameScreen.scrollIntoView({ behavior: "smooth" });
     currentPage = 2;
     setTimeout(function () {
+      resetGame();
       timerId = setInterval(updateTime, 1000);
-    });
+      showWoodyTimeoutId = setTimeout(function () {
+        showWoody();
+      }, 2000);
+    }, 2000);
   }
 });
 
@@ -75,7 +116,6 @@ let woodyIntervalId = null;
 let buzzIntervalId = null;
 
 //----Show Woody-------
-
 function showWoody() {
   if (timeUp) {
     return;
@@ -88,7 +128,7 @@ function showWoody() {
       wrong[i].style.display = "none";
     }
     if (!timeUp) {
-      showBuzz(); // start showing buzz element
+      showBuzz();
     }
   }, 2000); // hide Woody after 2 seconds
 }
@@ -99,13 +139,13 @@ for (let i = 0; i < woodyList.length; i++) {
     this.style.display = "none";
     score -= 10;
     scores.innerHTML = score;
-    wrong[i].style.display = "block"; // display the corresponding wrong element
+    wrong[i].style.display = "block";
     setTimeout(function () {
-      wrong[i].style.display = "none"; // hide the wrong element after a delay
+      wrong[i].style.display = "none";
       if (!timeUp) {
-        showBuzz(); // start showing buzz element
+        showBuzz();
       }
-    }, 2000);
+    }, 2000); // hide Woody
   };
 }
 
@@ -119,12 +159,10 @@ function showBuzz() {
   buzzIntervalId = setTimeout(function () {
     buzzList[i].style.display = "none";
     if (!timeUp) {
-      showWoody(); // start showing woody element
+      showWoody();
     }
-  }, 900); // hide Buzz after 900ms
+  }, 1500); // hide Buzz after 900ms
 }
-
-showWoody(); // start showing woody element
 
 for (let i = 0; i < buzzList.length; i++) {
   buzzList[i].onclick = function () {
@@ -133,7 +171,43 @@ for (let i = 0; i < buzzList.length; i++) {
     score += 10;
     scores.innerHTML = score;
     setTimeout(function () {
-      showWoody(); // start showing woody element
+      showWoody();
     }, 1000);
   };
 }
+
+// ------Replay Game at Game Page-----
+
+function playGame() {
+  message.style.display = "none";
+  resetGame();
+  woodyList.forEach((woody) => (woody.style.display = "none"));
+  buzzList.forEach((buzz) => (buzz.style.display = "none"));
+  wrong.forEach((wrong) => (wrong.style.display = "none"));
+  clearInterval(woodyIntervalId);
+  clearInterval(buzzIntervalId);
+  timerId = setInterval(updateTime, 1000);
+  showWoodyTimeoutId = setTimeout(function () {
+    showWoody();
+  }, 2000);
+}
+
+replayGame.addEventListener("click", function () {
+  message.style.display = "none";
+  playGame();
+});
+
+//----End Game at Game Page------
+backHome.addEventListener("click", function () {
+  message.style.display = "none";
+  if (currentPage === 2) {
+    homeScreen.scrollIntoView({ behavior: "smooth" });
+    currentPage = 1;
+    resetGame();
+    woodyList.forEach((woody) => (woody.style.display = "none"));
+    buzzList.forEach((buzz) => (buzz.style.display = "none"));
+    wrong.forEach((wrong) => (wrong.style.display = "none"));
+    clearInterval(woodyIntervalId);
+    clearInterval(buzzIntervalId);
+  }
+});
