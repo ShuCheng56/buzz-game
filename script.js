@@ -93,7 +93,7 @@ function updateTime() {
     clearTimeout(timerId);
     setTimeout(function () {
       endGame();
-    }, 2000);
+    }, 1200);
   }
 }
 
@@ -107,8 +107,8 @@ startBtn.addEventListener("click", function () {
       timerId = setInterval(updateTime, 1000);
       showWoodyTimeoutId = setTimeout(function () {
         showWoody();
-      }, 2000);
-    }, 2000);
+      }, 1200);
+    }, 1200);
   }
 });
 
@@ -130,7 +130,7 @@ function showWoody() {
     if (!timeUp) {
       showBuzz();
     }
-  }, 2000); // hide Woody after 2 seconds
+  }, 1200); // hide Woody after 2 seconds
 }
 
 for (let i = 0; i < woodyList.length; i++) {
@@ -145,7 +145,7 @@ for (let i = 0; i < woodyList.length; i++) {
       if (!timeUp) {
         showBuzz();
       }
-    }, 2000); // hide Woody
+    }, 1200); // hide Woody
   };
 }
 
@@ -161,7 +161,7 @@ function showBuzz() {
     if (!timeUp) {
       showWoody();
     }
-  }, 1500); // hide Buzz after 900ms
+  }, 1000); // hide Buzz after 900ms
 }
 
 for (let i = 0; i < buzzList.length; i++) {
@@ -172,7 +172,7 @@ for (let i = 0; i < buzzList.length; i++) {
     scores.innerHTML = score;
     setTimeout(function () {
       showWoody();
-    }, 1000);
+    }, 1200);
   };
 }
 
@@ -189,7 +189,7 @@ function playGame() {
   timerId = setInterval(updateTime, 1000);
   showWoodyTimeoutId = setTimeout(function () {
     showWoody();
-  }, 2000);
+  }, 1200);
 }
 
 replayGame.addEventListener("click", function () {
